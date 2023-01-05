@@ -8,9 +8,32 @@
  * 6- Player can shoot the ball or pass it to another player
  * 7- Player can get subsituted
  */
+// In-Memory datasource  
+var number = 1; // Int => 32bit 
+var number2 = 0;
+
+var number3 = number2;
+number2 = 5;
+Console.WriteLine(number3); // 0
+
+Team teamOne = new Team();
+teamOne.Country = "UK";  // Object rererence not set to an instance of an object
+
+Team teamTwo = teamOne;
+teamTwo.Country = "France";
+
+
+Team teamThree = teamTwo;
+teamThree.Country = "Germany";
+
+Team teamFour = new Team(); 
+
+Console.WriteLine(teamOne.Country); // France
+Console.WriteLine(teamTwo.Country); // France
+
 #region Data 
 // Build the Teams 
-var spain = new Team()
+Team spain = new Team()
 {
 	Coach = "Someone",
 	Country = "Spain",
@@ -41,7 +64,7 @@ var spain = new Team()
 	}
 };
 
-var france = new Team()
+Team france = new Team()
 {
 	Coach = "Someone3",
 	Country = "France",
@@ -87,7 +110,7 @@ var rome = new Stadium
 };
 #endregion 
 
-var allTeams = new[] { spain, france };
+var allTeams = new[] { spain, france }; // 1000 
 var allStadiums = new[] { wembly, rome };
 
 var games = new List<Game>();
@@ -97,6 +120,7 @@ var user = new User()
 	Id = 3567,
 	Usrename = "ahmadmozaffar"
 };
+user.SetPhone("8189993333"); 
 
 
 while (true)
@@ -165,7 +189,37 @@ while (true)
 public class User
 {
 	// Attributes (Data)
-	public int Id { get; set; }
+	// Encapsulation 
+
+
+	//private int id;
+	
+	//// Read-Only property 
+	//public int Id
+	//{
+	//	get { return id; }
+	//	private set 
+	//	{
+	//		// Add your logic 
+	//		id = value;  
+	//	}
+	//}
+	
+	private string phone = "123456789";
+	
+	public string GetPhone()
+	{
+		return phone.Substring(4); 
+	}
+
+	public void SetPhone(string phone)
+	{
+		if (!phone.StartsWith("+961"))
+			phone = "+961" + phone;
+		this.phone = phone; 
+	}
+	public int Id { get; set; } // Auto-Property 
+	
 	public string? Usrename { get; set; }
 
 	// Behaviors (Methods)
@@ -252,8 +306,7 @@ public class Game
 	
 	public void Score(Player player)
 	{
-		// Check if the player in the first team 
-		var firstTeamPlayer = FirstTeam.Players.FirstOrDefault(p => p.Id == player.Id); 
+		Player? firstTeamPlayer = CheckIfPlayerFromFirstTeam(player);
 		if (firstTeamPlayer == null)
 		{
 			// Second team scored 
@@ -267,6 +320,14 @@ public class Game
 			Console.WriteLine($"{FirstTeam.Country} HAAS SCORED!!!!!");
 		}
 	}
+
+	private Player? CheckIfPlayerFromFirstTeam(Player player)
+	{
+		// Check if the player in the first team 
+		return FirstTeam.Players.FirstOrDefault(p => p.Id == player.Id);
+	}
+
+
 
 	// Number of passes
 	// people who scores 
