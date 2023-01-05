@@ -8,6 +8,11 @@
  * 6- Player can shoot the ball or pass it to another player
  * 7- Player can get subsituted
  */
+
+Timer timer = new Timer();
+timer.IntervalInSeconds = 3600; 
+
+
 // In-Memory datasource  
 var number = 1; // Int => 32bit 
 var number2 = 0;
@@ -354,6 +359,36 @@ public class Stadium
 	public int Id { get; set; }
 	public string? Country { get; set; }
 	public string? Name { get; set; }
+}
+
+public class Timer
+{
+	// Interval in milleseconds 
+	private int _interval = 1000; // second 
+	public int IntervalInSeconds
+	{
+		get => _interval / 1000;
+		set => _interval = value * 1000; // Converto to millesecond
+	}
+
+	public DateTime Birthdate { get; set; }
+
+	public int Interval { get; set; }
+
+	public void Stop()
+	{
+		
+	}
+
+	public void Start()
+	{
+		
+	}
+
+	public void DoSomething()
+	{
+		
+	}
 }
 
 // Homework 
